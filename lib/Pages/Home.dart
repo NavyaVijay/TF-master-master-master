@@ -404,114 +404,26 @@ class _HomeState extends State<Home> {
               left: 5,
               right: 5,
               bottom:0,
+
               child:FutureBuilder(
 
                   future: currentLocation(),
                   builder: (BuildContext context,AsyncSnapshot snapshot){
                     if(snapshot.hasData){
-                      return Stack(
-                        children: [
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
+                      return Center(
+
+                        child:FirebaseAnimatedList(query: _ref,
+                           sort: (a, b) => (Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(a.value['Latitude']),double.parse(a.value['Longitude']))).compareTo((Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(b.value['Latitude']),double.parse(b.value['Longitude'])))),
+                           scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
                               ){
                             Map turf = snapshot.value;
                             double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
                             turf.putIfAbsent('Distance', () => (distance/1000).toString());
-
-                            if((distance/1000)<20){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-                            turf.putIfAbsent('Distance', () => (distance/1000).toString());
-
-                            if((distance/1000)<=10){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-                            turf.putIfAbsent('Distance', () => (distance/1000).toString());
-
-                            if((distance/1000)>10&&(distance/1000)<=20){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
+                            return _buildTurfItem(turf: turf);}
+                         ) );
 
 
-                            if((distance/1000)>20&&(distance/1000)<=50){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
 
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-
-
-                            if((distance/1000)>50&&(distance/1000)<=100){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-
-
-                            if((distance/1000)>100&&(distance/1000)<=200){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-
-
-                            if((distance/1000)>200&&(distance/1000)<=500){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-                          FirebaseAnimatedList(query: _ref,scrollDirection: Axis.horizontal,itemBuilder: (BuildContext context,DataSnapshot snapshot,Animation<double>animation,int index,
-                              ){
-                            Map turf = snapshot.value;
-                            double distance=Geolocator.distanceBetween(pos.latitude,pos.longitude,double.parse(turf['Latitude']),double.parse(turf['Longitude']));
-
-
-                            if((distance/1000)>500){
-                              Map turf1=snapshot.value;
-                              turf1.putIfAbsent('Distance', () => (distance/1000).toString()+' km');
-                              return _buildTurfItem(turf: turf1);}
-
-                          },),
-
-
-                        ],
-
-                      );
                     }
                     else{
                       return Center(
